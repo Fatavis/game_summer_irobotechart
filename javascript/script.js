@@ -86,7 +86,7 @@ function update(){
                 break;
             }
         if(x>800 || x<0 || y<0 || y>600){
-           ennemies.destroy();
+           ennemies.removeAll();
            i = 0;
         }
             x_ennemy = x_ennemy.push(x);
