@@ -35,6 +35,8 @@ function create(){
         text = game.add.text(game.world.centerX, game.world.centerY, 'Temps: 0', { font: "30px Arial", fill: "#ffffff", align: "center" });
         text.anchor.setTo(-1, 7.5);
         game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
+        // Create an empty group
+        ennemies = game.add.group(); 
 	} 		
 function update(){ 
         //vérifie si le joueur ne quitte pas le terrain
@@ -53,9 +55,8 @@ function update(){
         //compteur
         i = i +1;
         if(i == start_spreading){
-            // Create an empty group
-            ennemies = game.add.group(); 
-            
+   
+            game.physics.arcade.collide(monSprite, ennemies, restartGame());
             //position initiale de l'ennemie différente de celle du joueur
             do{
                 x =  Math.floor(Math.random() * 800);
@@ -95,7 +96,7 @@ function update(){
         //Si la propagation quitte le terrain on relance une nouvelle propagation
         //Si on arrive dans la dernière boucle alors on initialise le compteur i et incrémente le compteur de propagation et on le détruit
         if(i == (end_spreading-1)){
-           ennemies.destroy();
+           ennemies.removeAll();
            i = 0;
            i_spreading = i_spreading + 1;
            end_spreading = end_spreading +100;
@@ -103,13 +104,15 @@ function update(){
                a = a -1;
            }
         }
+        //game.physics.arcade.collide(monSprite, ennemies, restartGame());
+       // game.physics.arcade.overlap(ennemies, monSprite, restartGame(), null, null);    
 }
 
 function add_ennemy(x,y){
-		ennemy = game.add.sprite(x,y,'ennemy');
+		ennemy = ennemies.create(x,y,'ennemy')
         game.physics.enable(ennemy,Phaser.Physics.ARCADE);
         // Add the pipe to our previously created group
-        ennemies.add(ennemy);
+        //ennemies.add(ennemy);
 }
 
 //function which allows to main character to move
