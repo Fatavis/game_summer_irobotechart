@@ -56,7 +56,7 @@ function update(){
         i = i +1;
         if(i == start_spreading){
    
-            game.physics.arcade.collide(monSprite, ennemies, restartGame());
+            //game.physics.arcade.collide(monSprite, ennemies, restartGame());
             //position initiale de l'ennemie différente de celle du joueur
             do{
                 x =  Math.floor(Math.random() * 800);
