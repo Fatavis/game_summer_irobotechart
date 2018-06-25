@@ -47,9 +47,6 @@ function update(){
         tempo = i%a;
         //variable qui correpond au nombre de boucle avant que la propagation commence
         start_spreading = 10;
-        //Tableau contenant tous les x et y des ennemy
-        var x_ennemy = [];
-        var y_ennemy = [];
         //condition qui agit différemment en fonction du nombre de fois que la fonction update est appelée
         //apparition du première ennemie
         //compteur
@@ -60,16 +57,16 @@ function update(){
             //position initiale de l'ennemie différente de celle du joueur
             do{
                 x =  Math.floor(Math.random() * 800);
+            }while(((x == monSprite.x) || (x == (monSprite.x-1)) || (x == (monSprite.x-2)) || (x == (monSprite.x-3)) || (x == (monSprite.x-4)) || (x == (monSprite.x-5)) || (x == (monSprite.x-6)) || (x == (monSprite.x-7)) || (x == (monSprite.x-8)) || (x == (monSprite.x-9)) || (x == (monSprite.x-10))));    
+            do{
                 y =  Math.floor(Math.random() * 600);
-            }while(x != monSprite.x && y != monSprite.y);
-            x_ennemy = x_ennemy.push(x);
-            y_ennemy = y_ennemy.push(y);
+            }while(((y == monSprite.y) || (y == (monSprite.y-1)) || (y == (monSprite.y-2)) || (y == (monSprite.y-3)) || (y == (monSprite.y-4)) || (y == (monSprite.y-5)) || (y == (monSprite.y-6)) || (y == (monSprite.y-7)) || (y == (monSprite.y-8)) || (y == (monSprite.y-9)) || (y == (monSprite.y-10))));
             add_ennemy(x,y);
         }
         //propagation if(début de la propagation, fin de la propagation, tempo == 0 ne doit pas être changé)
         if(i>start_spreading && i<end_spreading && tempo == 0){
             //variable qui prendre des valeurs entre 0 et 3
-            random =  Math.floor(Math.random() * 3);
+            random =  Math.floor(Math.random() * 4);
             //En fonction de la varaiable aléatoire on ajoute ou soutrait 10px 
             switch (random) {
               case 0:
@@ -89,8 +86,6 @@ function update(){
            ennemies.removeAll();
            i = 0;
         }
-            x_ennemy = x_ennemy.push(x);
-            y_ennemy = y_ennemy.push(y);
             add_ennemy(x,y);
         }
         //Si la propagation quitte le terrain on relance une nouvelle propagation
@@ -100,10 +95,12 @@ function update(){
            i = 0;
            i_spreading = i_spreading + 1;
            end_spreading = end_spreading +100;
-           if(a>2){
+           if(a>1){
                a = a -1;
+               console.log(a);
            }
         }
+        game.physics.arcade.collide(monSprite, ennemies, restartGame, null, this);
         //game.physics.arcade.collide(monSprite, ennemies, restartGame());
        // game.physics.arcade.overlap(ennemies, monSprite, restartGame(), null, null);    
 }
@@ -147,6 +144,7 @@ function restartGame(){
         // Start the 'main' state, which restarts the game
         console.log('Restart');
         this.game.state.restart();
+       
     }
 
 //incrémente les secondes
@@ -157,3 +155,4 @@ function updateCounter() {
     text.setText('Temps: ' + counter);
 
 }
+
